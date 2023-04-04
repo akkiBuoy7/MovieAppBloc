@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:movie_app_bloc/src/blocs/movies_bloc.dart';
 import '../blocs/movie_detail_bloc.dart';
 import '../blocs/movie_detail_bloc_provider.dart';
 import '../models/TrailerModel.dart';
@@ -43,7 +44,8 @@ class _MovieDetailState extends State<MovieDetail> {
   final String voteAverage;
   final int movieId;
 
-  late MovieDetailBloc bloc;
+  late MovieDetailBloc detailBloc;
+
 
   _MovieDetailState({
     required this.title,
@@ -54,16 +56,24 @@ class _MovieDetailState extends State<MovieDetail> {
     required this.movieId,
   });
 
+  /*
+  initstate is called before the state loads its dependencies and for that reason
+   no context is available and you get an error for that if you use context in
+   initstate. However, didChangeDependencies is called just a few moments after
+   the state loads its dependencies and context is available at this moment so here
+   you can use context.
+   */
+
   @override
   void didChangeDependencies() {
-    bloc = MovieDetailBlocProvider.of(context);
-    bloc.fetchTrailersById(movieId);
+    detailBloc = MovieDetailBlocProvider.of(context);
+    detailBloc.fetchTrailersById(movieId);
     super.didChangeDependencies();
   }
 
   @override
   void dispose() {
-    bloc.dispose();
+    detailBloc.dispose();
     super.dispose();
   }
 
@@ -148,7 +158,7 @@ class _MovieDetailState extends State<MovieDetail> {
                 Container(margin: EdgeInsets.only(top: 8.0,
                     bottom: 8.0)),
                 StreamBuilder(
-                  stream: bloc.movieTrailers,
+                  stream: detailBloc.movieTrailers,
                   builder:
                       (context, AsyncSnapshot<Future<TrailerModel>> snapshot) {
                     if (snapshot.hasData) {

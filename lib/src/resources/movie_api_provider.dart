@@ -9,6 +9,9 @@ import '../models/TrailerModel.dart';
 fetchMovieList() method is making the network call to the API. Once the network
  call is complete it’s returning a Future ItemModel object if the network call
  was successful or it will throw an Exception.
+
+fetchTrailer(movie_id) is the method which we make the hit the API and convert
+the JSON response to a TrailerModel object and return a Future<TrailerModel>.
  */
 
 class MovieApiProvider {

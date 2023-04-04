@@ -97,6 +97,14 @@ class _MovieListState extends State<MovieList> {
   // }
 
 
+
+  /*
+   inside the MaterialPageRoute we are returning the MovieDetailBlocProvider
+   (InheritedWidget) and wrapping the MovieDetail screen into it.
+   So that the MovieDetailBloc class will be accessible inside the detail screen
+   and to all the widgets below it.
+   */
+
   openDetailPage(ItemModel data, int index) {
     Navigator.push(
       context,
